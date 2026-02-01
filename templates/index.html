@@ -1,0 +1,160 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <h2>📂 Daftar Arsip</h2>
+        </div>
+        <a href="{{ url_for('add') }}" class="btn btn-sm btn-primary">
+            ➕ Tambah Baru
+        </a>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #eef2ff; color: #4361ee;">📊</div>
+            <div class="stat-info">
+                <h3>Total Arsip</h3>
+                <p>{{ total_stats }}</p>
+            </div>
+        </div>
+
+        {% for cat in category_stats %}
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #ecfdf5; color: #10b981;">📂</div>
+            <div class="stat-info">
+                <h3>{{ cat['category'] }}</h3>
+                <p>{{ cat['count'] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="filter-section">
+        <form action="{{ url_for('index') }}" method="GET" class="search-form"
+            style="background: white; padding: 0.5rem; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; width: 100%; gap: 0.5rem; align-items: center;">
+
+            <div style="flex: 2; position: relative; display: flex; align-items: center;">
+                <span style="position: absolute; left: 10px; opacity: 0.5;">🔍</span>
+                <input type="text" name="q" placeholder="Cari judul atau deskripsi..." value="{{ query }}"
+                    class="form-control"
+                    style="padding-left: 2.2rem; border: none; background: transparent; box-shadow: none;">
+            </div>
+
+            <div style="width: 1px; height: 24px; background: #e2e8f0;"></div>
+
+            <div style="flex: 1; position: relative;">
+                <select name="category" class="form-control"
+                    style="border: none; background: transparent; cursor: pointer; color: #475569; font-weight: 500;">
+                    <option value="">📂 Semua Kategori</option>
+                    <option value="Surat Masuk" {{ 'selected' if category_filter=='Surat Masuk' else '' }}>📥 Surat
+                        Masuk</option>
+                    <option value="Surat Keluar" {{ 'selected' if category_filter=='Surat Keluar' else '' }}>📤 Surat
+                        Keluar</option>
+                    <option value="Dokumen Peraturan" {{ 'selected' if category_filter=='Dokumen Peraturan' else '' }}>
+                        📜 Peraturan</option>
+                    <option value="Laporan Keuangan" {{ 'selected' if category_filter=='Laporan Keuangan' else '' }}>💰
+                        Keuangan</option>
+                    <option value="Gambar" {{ 'selected' if category_filter=='Gambar' else '' }}>🖼️ Gambar</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-sm btn-primary" style="border-radius: 6px;">Cari</button>
+
+            {% if query or category_filter %}
+            <a href="{{ url_for('index') }}" class="btn btn-sm btn-outline" style="border: none; color: #64748b;"
+                title="Reset Filter">
+                🔄
+            </a>
+            {% endif %}
+        </form>
+    </div>
+    <div class="table-responsive">
+        {% if archives %}
+        <table class="archive-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">
+                        <a href="{{ url_for('index', sort='asc' if sort_order == 'desc' else 'desc', q=query, category=category_filter) }}"
+                            style="text-decoration: none; color: inherit;" title="Urutkan">
+                            No {{ '↓' if sort_order == 'desc' else '↑' }}
+                        </a>
+                    </th>
+                    <th>Judul</th>
+                    <th>Kategori</th>
+                    <th>Deskripsi</th>
+                    <th>Tanggal</th>
+                    <th>File</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for archive in archives %}
+                <tr>
+                    <td>
+                        {% if sort_order == 'desc' %}
+                        {{ total_records - ((page - 1) * 10 + loop.index0) }}
+                        {% else %}
+                        {{ (page - 1) * 10 + loop.index }}
+                        {% endif %}
+                    </td>
+                    <td><strong>{{ archive['title'] }}</strong></td>
+                    <td><span class="badge">{{ archive['category'] }}</span></td>
+                    <td>{{ archive['description'] }}</td>
+                    <td>{{ archive['created_at'] }}</td>
+                    <td>
+                        {% if archive['file_path'] %}
+                        <div class="action-buttons">
+                            <a href="{{ url_for('download_file', filename=archive['file_path']) }}"
+                                class="btn btn-sm btn-outline-primary" target="_blank" title="Lihat File">
+                                👁️ Buka
+                            </a>
+                            <a href="{{ url_for('download_file', filename=archive['file_path']) }}"
+                                class="btn btn-sm btn-outline" download title="Unduh File">
+                                ⬇️ Unduh
+                            </a>
+                        </div>
+                        {% else %}
+                        <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td class="action-buttons">
+                        <a href="{{ url_for('edit', id=archive['id']) }}" class="btn btn-sm btn-outline">Edit</a>
+                        <form action="{{ url_for('delete', id=archive['id']) }}" method="POST"
+                            onsubmit="return confirm('Yakin ingin menghapus arsip ini?');" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        {% if total_pages > 1 %}
+        <div class="pagination-container">
+            <a href="{{ url_for('index', page=page-1, q=query, category=category_filter, sort=sort_order) }}"
+                class="btn btn-sm btn-outline {{ 'disabled' if page == 1 else '' }}">
+                ← Sebelumnya
+            </a>
+
+            <span class="page-info">Halaman {{ page }} dari {{ total_pages }}</span>
+
+            <a href="{{ url_for('index', page=page+1, q=query, category=category_filter, sort=sort_order) }}"
+                class="btn btn-sm btn-outline {{ 'disabled' if page == total_pages else '' }}">
+                Selanjutnya →
+            </a>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="empty-state">
+            <p>Belum ada data arsip.</p>
+            <a href="{{ url_for('add') }}" class="btn btn-sm btn-primary">Tambah Sekarang</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

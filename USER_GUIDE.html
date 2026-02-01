@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Pengguna - Sistem Arsip Desa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2563eb;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-top: 30px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 20px;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f3f4f6;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #dc2626;
+        }
+
+        .note {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: #1e3a8a;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 0.8em;
+            color: #6b7280;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 20mm;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📖 Panduan Pengguna Sistem Informasi Arsip Desa</h1>
+
+    <p>Selamat datang di <strong>Sistem Informasi Arsip Digital Desa</strong>. Aplikasi ini dirancang untuk memudahkan
+        pengelolaan, penyimpanan, dan pencarian dokumen arsip desa dengan tampilan yang modern dan mudah digunakan.</p>
+
+    <h2>🚀 Memulai Aplikasi</h2>
+
+    <h3>1. Login Administrator</h3>
+    <p>Halaman pertama yang akan Anda temui adalah halaman Login. Keamanan adalah prioritas, sehingga hanya admin yang
+        terdaftar yang dapat mengakses sistem.</p>
+    <ul>
+        <li><strong>Username Default</strong>: <code>admin</code></li>
+        <li><strong>Password Default</strong>: <code>admin123</code></li>
+        <li><strong>Instruksi</strong>: Masukkan username dan password pada kolom yang tersedia, lalu klik tombol
+            <strong>Masuk ke Sistem</strong>.</li>
+    </ul>
+
+    <h2>📊 Dashboard Utama</h2>
+    <p>Setelah berhasil login, Anda akan diarahkan ke Dashboard. Ini adalah pusat kendali aplikasi.</p>
+
+    <h3>Fitur Dashboard:</h3>
+    <ol>
+        <li>
+            <strong>Kartu Statistik</strong>: Di bagian atas, Anda dapat melihat ringkasan cepat:
+            <ul>
+                <li><strong>Total Arsip</strong>: Jumlah seluruh dokumen yang tersimpan.</li>
+                <li><strong>Per Kategori</strong>: Jumlah dokumen yang dikelompokkan berdasarkan jenisnya (Surat Masuk,
+                    Surat Keluar, dll).</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Pencarian & Filter</strong>:
+            <ul>
+                <li><strong>Cari</strong>: Ketik judul atau deskripsi pada kolom pencarian untuk menemukan dokumen
+                    spesifik.</li>
+                <li><strong>Filter Kategori</strong>: Pilih kategori dari <em>dropdown</em> untuk menampilkan jenis
+                    dokumen tertentu saja.</li>
+                <li><strong>Tombol Reset</strong>: Muncul otomatis saat Anda sedang mencari/memfilter, klik untuk
+                    kembali melihat semua data.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Tabel Arsip</strong>: Daftar dokumen ditampilkan dalam tabel yang rapi.
+            <ul>
+                <li><strong>Sortir (Urutkan)</strong>: Klik pada judul kolom <strong>No</strong> untuk mengurutkan data
+                    dari yang terbaru atau terlama.</li>
+                <li><strong>Aksi</strong>: Tombol untuk <strong>Lihat/Unduh</strong> file, <strong>Edit</strong> data,
+                    atau <strong>Hapus</strong> arsip.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Navigasi Halaman (Pagination)</strong>: Jika data banyak, gunakan tombol <strong>Sebelumnya</strong>
+            dan <strong>Selanjutnya</strong> di bagian bawah untuk berpindah halaman.
+        </li>
+    </ol>
+
+    <h2>📝 Mengelola Arsip</h2>
+
+    <h3>1. Menambah Arsip Baru</h3>
+    <p>Klik tombol <strong>➕ Tambah Baru</strong> di pojok kanan atas Dashboard.</p>
+    <ul>
+        <li><strong>Judul Arsip</strong>: Masukkan nama dokumen (Wajib).</li>
+        <li><strong>Kategori</strong>: Pilih jenis dokumen (Surat Masuk, Dokumen Peraturan, dll).</li>
+        <li><strong>Deskripsi</strong>: Tuliskan keterangan singkat.
+            <div class="note"><em>Catatan</em>: Maksimal 50 kata. Sistem akan otomatis memotong jika lebih.</div>
+        </li>
+        <li><strong>Upload File</strong>:
+            <ul>
+                <li>Klik area kotak bintik-bintik atau ikon awan ☁️ untuk memilih file dari komputer Anda.</li>
+                <li>Setelah file dipilih, nama file akan muncul sebagai konfirmasi.</li>
+            </ul>
+        </li>
+        <li>Klik <strong>Simpan Arsip</strong> untuk menyimpan.</li>
+    </ul>
+
+    <h3>2. Mengedit Arsip</h3>
+    <p>Pada tabel di Dashboard, klik tombol <strong>Edit</strong> di kolom Aksi. Anda dapat mengubah judul, kategori,
+        deskripsi, atau mengganti file yang sudah ada dengan yang baru.</p>
+
+    <h3>3. Menghapus Arsip</h3>
+    <p>Klik tombol <strong>Hapus</strong> (warna merah) pada arsip yang ingin dihapus. Konfirmasi peringatan yang muncul
+        untuk menghapus data secara permanen.</p>
+
+    <h2>⚙️ Pengaturan Akun</h2>
+    <p>Untuk keamanan, sangat disarankan mengubah password default.</p>
+    <ol>
+        <li>Klik menu <strong>⚙️ Pengaturan</strong> di Sidebar (menu samping).</li>
+        <li><strong>Password Lama</strong>: Masukkan password Anda saat ini.</li>
+        <li><strong>Password Baru</strong>: Masukkan password baru yang diinginkan.</li>
+        <li><strong>Konfirmasi Password</strong>: Masukkan ulang password baru untuk memastikan tidak ada salah ketik.
+        </li>
+        <li>Klik <strong>Simpan Perubahan</strong>.</li>
+    </ol>
+
+    <h2>🚪 Keluar (Logout)</h2>
+    <p>Jika telah selesai menggunakan aplikasi, klik menu <strong>🚪 Logout</strong> di bagian bawah Sidebar untuk
+        keluar dari sistem dengan aman.</p>
+
+    <div class="footer">
+        <strong>Butuh Bantuan?</strong><br>
+        Hubungi tim teknis atau pengembang aplikasi jika Anda mengalami kendala teknis.<br><br>
+        <em>Dibuat untuk Kerja Praktik 2026 - ArsipDesa</em>
+    </div>
+</body>
+
+</html>
